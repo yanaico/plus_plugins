@@ -27,7 +27,13 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 33
-    namespace 'io.flutter.plugins.deviceinfoexample.example'
+
+    // Only set namespace on compatible versions (Android Gradle plugin >= 7.0.0)
+    // The if-check checks for a property that has been removed since AGP 7.0.0
+    // https://developer.android.com/build/releases/past-releases/agp-7-0-0-release-notes#build-cache-removed
+    if (!project.hasProperty("android.buildCacheDir")) {
+        namespace 'io.flutter.plugins.deviceinfoexample.example'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

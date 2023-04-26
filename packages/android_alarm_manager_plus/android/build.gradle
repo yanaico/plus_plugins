@@ -23,7 +23,14 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 31
-    namespace 'dev.fluttercommunity.plus.androidalarmmanager'
+
+    // Only set namespace on compatible versions (Android Gradle plugin >= 7.0.0)
+    // The if-check checks for a property that has been removed since AGP 7.0.0
+    // https://developer.android.com/build/releases/past-releases/agp-7-0-0-release-notes#build-cache-removed
+    if (!project.hasProperty("android.buildCacheDir")) {
+        namespace 'dev.fluttercommunity.plus.androidalarmmanager'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
